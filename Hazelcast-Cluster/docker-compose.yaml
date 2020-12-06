@@ -1,0 +1,35 @@
+version: "3.8"
+
+services: 
+
+  hazelcast_member_1:
+    image: "hazelcast/hazelcast:3.12.10"
+    container_name: "hazelcast_member_1"
+    ports: 
+      - "5701:5701"
+    environment: 
+      - "MANCENTER_URL=http://hazelcast_management:8080/hazelcast-mancenter"
+    networks: 
+      - "hazelnet"
+
+  hazelcast_member_2:
+    image: "hazelcast/hazelcast:3.12.10"
+    container_name: "hazelcast_member_2"
+    ports: 
+      - "5702:5701"
+    environment: 
+      - "MANCENTER_URL=http://hazelcast_management:8080/hazelcast-mancenter"
+    networks:
+      - "hazelnet"
+  
+  hazelcast_management:
+    image: "hazelcast/management-center:3.12.10"
+    container_name: "hazelcast_management"
+    ports:
+      - "5800:8080"
+    networks:
+      - "hazelnet"
+
+networks:
+  hazelnet:
+    driver: "bridge"

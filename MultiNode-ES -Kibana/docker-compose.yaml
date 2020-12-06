@@ -1,0 +1,52 @@
+version: "3.8"
+
+services: 
+  elasticsearch_node_1:
+    image: "elasticsearch:7.9.3"
+    container_name: "elasticsearch_node_1"
+    environment:
+      - "node.name=elasticsearch_node_1"
+      - "cluster.name=es-docker-cluster"
+      - "discovery.seed_hosts=elasticsearch_node_2"
+      - "cluster.initial_master_nodes=elasticsearch_node_1,elasticsearch_node_2"
+      - "ES_JAVA_OPTS=-Xms1g -Xmx1g"
+    volumes:
+      - "esvol_1:/usr/share/elasticsearch/data"
+    ports:
+      - "9200:9200"
+    networks:
+      - "elasticnet"
+
+  elasticsearch_node_2:
+    image: "elasticsearch:7.9.3"
+    container_name: "elasticsearch_node_2"
+    environment:
+      - "node.name=elasticsearch_node_2"
+      - "cluster.name=es-docker-cluster"
+      - "discovery.seed_hosts=elasticsearch_node_1"
+      - "cluster.initial_master_nodes=elasticsearch_node_1,elasticsearch_node_2"
+      - "ES_JAVA_OPTS=-Xms1g -Xmx1g"
+    volumes:
+      - "esvol_2:/usr/share/elasticsearch/data"
+    networks:
+      - "elasticnet"
+
+  kibana:
+    image: "kibana:7.9.3"
+    container_name: "kibana"
+    environment:
+      - "ELASTICSEARCH_HOSTS=[\"http://elasticsearch_node_1:9200\",\"http://elasticsearch_node_2:9200\"]"
+    ports:
+      - "5601:5601"
+    networks:
+      - "elasticnet"
+
+volumes:
+  esvol_1:
+    driver: local
+  esvol_2:
+    driver: local
+
+networks:
+  elasticnet:
+    driver: bridge
