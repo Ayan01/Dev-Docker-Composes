@@ -40,6 +40,9 @@ services:
       - "5601:5601"
     networks:
       - "elasticnet"
+    depends_on: 
+      - "elasticsearch_node_1"
+      - "elasticsearch_node_2"
 
 volumes:
   esvol_1:

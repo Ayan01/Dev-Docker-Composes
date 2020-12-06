@@ -29,6 +29,9 @@ services:
       - "5800:8080"
     networks:
       - "hazelnet"
+    depends_on: 
+      - "hazelcast_member_1"
+      - "hazelcast_member_2"
 
 networks:
   hazelnet:
