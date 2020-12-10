@@ -46,10 +46,10 @@ services:
 
 volumes:
   esvol_1:
-    driver: local
+    driver: "local"
   esvol_2:
-    driver: local
+    driver: "local"
 
 networks:
   elasticnet:
-    driver: bridge
+    driver: "bridge"

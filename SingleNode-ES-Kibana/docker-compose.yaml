@@ -30,8 +30,8 @@ services:
 
 volumes:
   esvol:
-    driver: local
+    driver: "local"
 
 networks:
   elasticnet:
-    driver: bridge
+    driver: "bridge"
