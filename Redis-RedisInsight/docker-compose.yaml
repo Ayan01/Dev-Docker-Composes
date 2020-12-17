@@ -13,7 +13,7 @@ services:
     command: "redis-server --appendonly yes"
   
   redisinsight:
-    image: "redislabs/redisinsight:1.8.1"
+    image: "redislabs/redisinsight:1.8.2"
     container_name: "redisinsight"
     volumes:
       - "redisinsightvol:/db"
