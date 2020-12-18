@@ -1,0 +1,35 @@
+version: "3.8"
+
+services:
+  postgresql_server:
+    image: "postgres:13.1"
+    container_name: "postgresql_server"
+    environment:
+      - "POSTGRES_PASSWORD=postgres"
+    volumes:
+      - "pgsqlvol:/var/lib/postgresql/data"
+    ports:
+      - "5432:5432"
+    networks:
+      - "pgsqlnet"
+
+  pgadmin:
+    image: "dpage/pgadmin4:4.29"
+    container_name: "pgadmin"
+    environment:
+      - "PGADMIN_DEFAULT_EMAIL=pgadmin@pgadmin.com"
+      - "PGADMIN_DEFAULT_PASSWORD=pgadmin"
+    ports:
+      - "8030:80"
+    networks:
+      - "pgsqlnet"
+    depends_on:
+      - "postgresql_server"
+
+volumes:
+  pgsqlvol:
+    driver: "local"
+
+networks:
+  pgsqlnet:
+    driver: "bridge"
