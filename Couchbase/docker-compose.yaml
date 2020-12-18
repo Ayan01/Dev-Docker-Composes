@@ -1,0 +1,38 @@
+version: "3.8"
+
+services:
+  couchbase_1:
+    image: "couchbase:community-6.6.0"
+    container_name: "couchbase_1"
+    volumes:
+      - "couchbasevol_1:/opt/couchbase/var"
+    ports:
+      - "8091-8094:8091-8094"
+      - "11210:11210"
+    networks:
+      couchbasenet:
+        ipv4_address: "172.10.0.5"
+    depends_on:
+      - "couchbase_2"
+  
+  couchbase_2:
+    image: "couchbase:community-6.6.0"
+    container_name: "couchbase_2"
+    volumes:
+      - "couchbasevol_2:/opt/couchbase/var"
+    networks:
+      couchbasenet:
+        ipv4_address: "172.10.0.6"
+
+volumes:
+  couchbasevol_1:
+    driver: "local"
+  couchbasevol_2:
+    driver: "local"
+
+networks:
+  couchbasenet:
+    driver: "bridge"
+    ipam:
+      config:
+        - subnet: "172.10.0.0/24"
