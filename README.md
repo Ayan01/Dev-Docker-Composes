@@ -23,5 +23,6 @@ That's it, your images will be downloaded and deployed in containers ready to us
 - MySQL with Adminer
 - PostgreSQL with pgAdmin **\***
 - Redis (Single Node) with RedisInsight
+- Kafka (Single Broker) with Kafdrop
 
 [**\*** The server(s)/client(s) requires some credentials to be set in the environment variables to start up or setup the service properly. By default, the bare minimum required credentials are set in the environment variables. If you choose to change the credentials, please go through the **docker-compose.yaml** file and update the corresponding environment variables before you do `docker-compose up -d`.]
